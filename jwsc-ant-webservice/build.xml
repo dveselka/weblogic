@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project default="all">
+	<import file="build-base.xml"/>
+	<target name="all" depends="clean,build-service,deploy-service"/>
+	<target name="init">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete dir="${dist.dir}"/>
+	</target>
+	<target name="build-service" depends="init">
+		<!-- Build WAR file using jwsc -->
+		<jwsc
+			srcdir="${src.dir}"
+			destdir="${build.dir}"
+			keepgenerated="${ws.keepgenerated}"
+			classpathref="wlslibs"
+			>
+			<module
+				name="${ws.name}"
+				contextpath="${ws.context}"
+				explode="false"
+				>
+				<jws
+					file="${ws.jwsfile}"
+					type="JAXWS"
+					/>
+			</module>
+		</jwsc>
+		<!-- Package into EAR file -->
+		<ear
+			destfile="${dist.dir}/${ws.name}.ear"
+			appxml="${build.dir}/META-INF/application.xml"
+			>
+			<fileset file="${build.dir}/${ws.name}.war"/>
+			<metainf
+				dir="${build.dir}/META-INF"
+				excludes="application.xml"
+				/>
+		</ear>
+	</target>
+	<target name="deploy-service" depends="build-service">
+		<!-- Try to undeploy the WS first -->
+		<wldeploy
+			action="undeploy"
+			failonerror="false"
+			name="${ws.name}"
+			adminurl="${wls.adminurl}"
+			targets="${wls.targets}"
+			user="${wls.user}"
+			password="${wls.passwd}"
+			/>
+		<!-- Deploy WS -->
+		<wldeploy
+			action="deploy"
+			failonerror="true"
+			library="false"
+			upload="true"
+			remote="true"
+			name="${ws.name}"
+			source="${dist.dir}/${ws.name}.ear"
+			adminurl="${wls.adminurl}"
+			targets="${wls.targets}"
+			user="${wls.user}"
+			password="${wls.passwd}"
+			/>
+	</target>
+</project>

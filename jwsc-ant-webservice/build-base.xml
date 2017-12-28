@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project default="build-fail">
+	<property file="build.properties"/>
+	<!-- WLS jar files -->
+	<path id="wlslibs">
+		<fileset dir="${libs.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	<!-- WLS task definitions -->
+	<taskdef 
+		name="jwsc"
+		classname="weblogic.wsee.tools.anttasks.JwscTask"
+		classpathref="wlslibs"
+		/>
+	<taskdef
+		name="wldeploy"
+		classname="weblogic.ant.taskdefs.management.WLDeploy"
+		classpathref="wlslibs"
+		/>
+	<target name="build-fail">
+		<fail message="Do not use this build file directly"/>
+	</target>
+</project>
