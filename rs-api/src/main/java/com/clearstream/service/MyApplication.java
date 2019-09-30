@@ -1,7 +1,7 @@
 /**
  * @author Copyright (c) 2008,2013, Oracle and/or its affiliates. All rights reserved.
  */
-package com.clearstream.service;
+package com.dave.service;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

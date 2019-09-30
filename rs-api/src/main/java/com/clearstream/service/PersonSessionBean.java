@@ -1,4 +1,4 @@
-package com.clearstream.service;
+package com.dave.service;
 
 import javax.ejb.Singleton;
 import java.util.ArrayList;
