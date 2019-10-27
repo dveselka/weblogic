@@ -11,8 +11,8 @@
   <name>rs-api</name>
   
   <properties>
-     <oracleMiddlewareHome>/opt/weblogic/</oracleMiddlewareHome>
-      <oracleServerUrl></oracleServerUrl>
+      <oracleMiddlewareHome>/app/weblogic/</oracleMiddlewareHome>
+      <oracleServerUrl>t3://localhost:9001</oracleServerUrl>
       <oracleUsername>weblogic</oracleUsername>
       <oraclePassword>weblogic123</oraclePassword>
       <oracleServerName></oracleServerName>
@@ -58,7 +58,7 @@
       <plugin>
         <groupId>com.oracle.weblogic</groupId> 
         <artifactId>weblogic-maven-plugin</artifactId> 
-        <version>12.2.1-2-0</version> 
+        <version>12.2.1-4-0</version> 
         <!--
         You can find and redefine the following variables in the parent pom file arccording to your environment.
   
@@ -80,7 +80,7 @@
             </goals>
             <configuration> 
               <!--The admin URL where the app is deployed. Here use the plugin's default value t3://localhost:7001-->
-              <!--adminurl>${oracleServerUrl}</adminurl-->
+              <adminurl>${oracleServerUrl}</adminurl>
               <user>${oracleUsername}</user> 
               <password>${oraclePassword}</password>
               <!--The location of the file or directory to be deployed-->
@@ -90,6 +90,7 @@
               <verbose>true</verbose> 
               <!--The deployment name of the application-->
               <name>${project.build.finalName}</name>
+              <upload>true</upload>
             </configuration> 
           </execution> 
         </executions>
