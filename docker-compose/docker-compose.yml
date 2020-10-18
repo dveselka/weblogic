@@ -7,7 +7,7 @@ networks:
 services:
   adminserver:
     container_name: adminserver    
-    image: 12214-weblogic-domain-generic
+    image: oracle/weblogic:12.2.1.4-generic
     restart: "no" 
     environment:
       DOMAIN_NAME: myDomain
@@ -28,9 +28,11 @@ services:
     ports:
       - "7001:7001"
       - "9002:9002"
+    networks:
+      - *network
     volumes:
       - /app/domains:/u01/oracle/user_projects/domains
       - /git/weblogic/docker-compose/properties:/u01/oracle/properties
-    networks:
-      - *network
 
+volumes:
+  adminserver:
