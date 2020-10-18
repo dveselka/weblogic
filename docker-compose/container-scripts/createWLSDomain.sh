@@ -30,38 +30,25 @@ trap _kill SIGKILL
 export DOMAIN_HOME=$CUSTOM_DOMAIN_ROOT/$CUSTOM_DOMAIN_NAME
 echo "Domain Home is:  $DOMAIN_HOME"
 
-SEC_PROPERTIES_FILE=${PROPERTIES_FILE_DIR}/domain_security.properties
-echo $SEC_PROPERTIES_FILE
-if [ ! -e "${SEC_PROPERTIES_FILE}" ]; then
-   echo "A properties file with the username and password needs to be supplied."
-   exit
-fi
-
 # Get Username
-USER=`awk '{print $1}' ${SEC_PROPERTIES_FILE} | grep username | cut -d "=" -f2`
+USER=${WEBLOGIC_USERNAME:=weblogic}
 if [ -z "${USER}" ]; then
    echo "The domain username is blank.  The Admin username must be set in the properties file."
    exit
 fi
 
 # Get Password
-PASS=`awk '{print $1}' ${SEC_PROPERTIES_FILE} | grep password | cut -d "=" -f2`
+
+PASS=${WEBLOGIC_PASSWORD:=weblogic123}
 if [ -z "${PASS}" ]; then
    echo "The domain password is blank.  The Admin password must be set in the properties file."
-   exit
-fi
-
-DOMAIN_PROPERTIES_FILE=${PROPERTIES_FILE_DIR}/domain.properties
-echo $DOMAIN_PROPERTIES_FILE
-if [ ! -e "${DOMAIN_PROPERTIES_FILE}" ]; then
-   echo "A Domain properties file needs to be supplied."
    exit
 fi
 
 #Create the domain the first time
 if [ ! -f ${DOMAIN_HOME}/servers/${CUSTOM_ADMIN_NAME}/logs/${CUSTOM_ADMIN_NAME}.log ]; then
    # Create domain
-   wlst.sh -skipWLSModuleScanning -loadProperties ${DOMAIN_PROPERTIES_FILE} -loadProperties ${SEC_PROPERTIES_FILE}  /u01/oracle/container-scripts/create-wls-domain.py
+   wlst.sh -skipWLSModuleScanning /u01/oracle/container-scripts/create-wls-domain.py
    retval=$?
 
    echo  "RetVal from Domain creation $retval"
