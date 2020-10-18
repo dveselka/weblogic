@@ -25,9 +25,9 @@ ENV LANG en_US.UTF-8
 # and place it on the same directory as the Dockerfile
 #
 
-ENV JAVA_VERSION=1.8.0_231 \
-	JAVA_PKG=server-jre-8u231-linux-x64.tar.gz \
-	JAVA_SHA256=1d59a0ea3ef302d5851370b838693b0b6bde4c3f32015a4de0a9e4d202a988fc \
+ENV JAVA_VERSION=1.8.0_261 \
+	JAVA_PKG=server-jre-8u261-linux-x64.tar.gz \
+	JAVA_SHA256=970eec4e5212721d5c8f9f52a5ab89b776884dc3c886bfbe010973d30114ffa9 \
 	JAVA_HOME=/usr/java/jdk-8
 	
 ENV	PATH $JAVA_HOME/bin:$PATH

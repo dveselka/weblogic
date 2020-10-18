@@ -1,0 +1,36 @@
+version: "3.8"
+
+networks:
+  &network wlsnet:
+    driver: bridge
+
+services:
+  adminserver:
+    container_name: adminserver    
+    image: 12214-weblogic-domain-generic
+    restart: "no" 
+    environment:
+      DOMAIN_NAME: myDomain
+      ADMIN_NAME: myadmin
+      ADMIN_LISTEN_PORT: 7001
+      ADMIN_HOST: AdminContainer
+      ADMINISTRATION_PORT_ENABLED: "false"
+      ADMINISTRATION_PORT: 9002
+      MANAGED_SERVER_PORT: 8001
+      MANAGED_SERVER_NAME_BASE: MS
+      CONFIGURED_MANAGED_SERVER_COUNT: 2
+      CLUSTER_NAME: cluster1
+      CLUSTER_TYPE: DYNAMIC
+      PRODUCTION_MODE: dev
+      DOMAIN_HOST_VOLUME: /app/domains
+      PROPERTIES_FILE_DIR: "/u01/oracle/properties"
+      PROPERTIES_FILE: /u01/oracle/properties/domain.properties
+    ports:
+      - "7001:7001"
+      - "9002:9002"
+    volumes:
+      - /app/domains:/u01/oracle/user_projects/domains
+      - /git/weblogic/docker-compose/properties:/u01/oracle/properties
+    networks:
+      - *network
+
