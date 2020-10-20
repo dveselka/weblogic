@@ -10,19 +10,21 @@ services:
     image: 12214-weblogic-domain-generic 
     restart: "no" 
     environment:
-      DOMAIN_NAME: myDomain
-      ADMIN_NAME: myadmin
-      ADMIN_PORT: 7001
-      ADMIN_HOST: AdminContainer
-      ADMINISTRATION_PORT_ENABLED: "false"
-      ADMINISTRATION_PORT: 9002
-      MANAGED_SERVER_PORT: 8001
-      MANAGED_SERVER_NAME_BASE: MS
-      CONFIGURED_MANAGED_SERVER_COUNT: 2
-      CLUSTER_NAME: cluster1
-      CLUSTER_TYPE: DYNAMIC
-      PRODUCTION_MODE_ENABLED: "false"
-      DOMAIN_HOME: /app/domains
+      CUSTOM_DOMAIN_NAME: myDomain
+      CUSTOM_ADMIN_NAME: myadmin
+      CUSTOM_ADMIN_PORT: 7001
+      CUSTOM_ADMIN_HOST: AdminContainer
+      CUSTOM_ADMINISTRATION_PORT_ENABLED: "false"
+      CUSTOM_ADMINISTRATION_PORT: 9002
+      CUSTOM_MANAGED_SERVER_PORT: 8001
+      CUSTOM_MANAGED_SERVER_NAME_BASE: MS
+      CUSTOM_CONFIGURED_MANAGED_SERVER_COUNT: 2
+      CUSTOM_CLUSTER_NAME: cluster1
+      CUSTOM_CLUSTER_TYPE: DYNAMIC
+      CUSTOM_PRODUCTION_MODE_ENABLED: "false"
+      CUSTOM_DOMAIN_HOME: /app/domains
+      CUSTOM_WEBLOGIC_USER: weblogic
+      CUSTOM_WEBLOGIC_PASSWORD: weblogic123
     ports:
       - "7001:7001"
       - "9002:9002"

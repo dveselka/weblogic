@@ -21,20 +21,21 @@ def getEnvVar(var):
   return val
 
 # This python script is used to create a WebLogic domain
-domain_name                   = os.environ.get("DOMAIN_NAME")
-admin_server_name             = os.environ.get("ADMIN_NAME")
-admin_port                    = int(os.environ.get("ADMIN_PORT"))
-server_port                   = int(os.environ.get("MANAGED_SERVER_PORT"))
-managed_server_name_base      = os.environ.get("MANAGED_SERVER_NAME_BASE")
-number_of_ms                  = int(os.environ.get("CONFIGURED_MANAGED_SERVER_COUNT"))
-domain_path                   = os.environ.get("DOMAIN_HOME")
-cluster_name                  = os.environ.get("CLUSTER_NAME")
-cluster_type                  = os.environ.get("CLUSTER_TYPE")
-production_mode_enabled       = os.environ.get("PRODUCTION_MODE_ENABLED")
+domain_name                   = getEnvVar("CUSTOM_DOMAIN_NAME")
+admin_server_name             = os.environ.get("CUSTOM_ADMIN_NAME")
+admin_port                    = int(os.environ.get("CUSTOM_ADMIN_PORT"))
+server_port                   = int(os.environ.get("CUSTOM_MANAGED_SERVER_PORT"))
+managed_server_name_base      = os.environ.get("CUSTOM_MANAGED_SERVER_NAME_BASE")
+number_of_ms                  = int(os.environ.get("CUSTOM_CONFIGURED_MANAGED_SERVER_COUNT"))
+domain_path                   = os.environ.get("CUSTOM_DOMAIN_HOME")
+cluster_name                  = os.environ.get("CUSTOM_CLUSTER_NAME")
+cluster_type                  = os.environ.get("CUSTOM_CLUSTER_TYPE")
+production_mode_enabled       = os.environ.get("CUSTOM_PRODUCTION_MODE_ENABLED")
 
-username = os.environ.get("WEBLOGIC_USERNAME")
-password = os.environ.get("WEBLOGIC_PASSWORD")
+username = getEnvVar("CUSTOM_WEBLOGIC_USERNAME")
+password = getEnvVar("CUSTOM_WEBLOGIC_PASSWORD")
 
+print('username              : [%s]' % username);
 
 print('domain_path              : [%s]' % domain_path);
 print('domain_name              : [%s]' % domain_name);
