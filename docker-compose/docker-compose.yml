@@ -12,7 +12,7 @@ services:
     environment:
       DOMAIN_NAME: myDomain
       ADMIN_NAME: myadmin
-      ADMIN_LISTEN_PORT: 7001
+      ADMIN_PORT: 7001
       ADMIN_HOST: AdminContainer
       ADMINISTRATION_PORT_ENABLED: "false"
       ADMINISTRATION_PORT: 9002
@@ -21,10 +21,8 @@ services:
       CONFIGURED_MANAGED_SERVER_COUNT: 2
       CLUSTER_NAME: cluster1
       CLUSTER_TYPE: DYNAMIC
-      PRODUCTION_MODE: dev
-      DOMAIN_HOST_VOLUME: /app/domains
-      PROPERTIES_FILE_DIR: "/u01/oracle/properties"
-      PROPERTIES_FILE: /u01/oracle/properties/domain.properties
+      PRODUCTION_MODE_ENABLED: "false"
+      DOMAIN_HOME: /app/domains
     ports:
       - "7001:7001"
       - "9002:9002"
@@ -36,3 +34,5 @@ services:
 
 volumes:
   adminserver:
+
+  

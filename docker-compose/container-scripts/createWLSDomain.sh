@@ -31,7 +31,7 @@ export DOMAIN_HOME=$CUSTOM_DOMAIN_ROOT/$CUSTOM_DOMAIN_NAME
 echo "Domain Home is:  $DOMAIN_HOME"
 
 # Get Username
-USER=${WEBLOGIC_USERNAME:=weblogic}
+USER=$WEBLOGIC_USERNAME
 if [ -z "${USER}" ]; then
    echo "The domain username is blank.  The Admin username must be set in the properties file."
    exit
@@ -39,7 +39,7 @@ fi
 
 # Get Password
 
-PASS=${WEBLOGIC_PASSWORD:=weblogic123}
+PASS=$WEBLOGIC_PASSWORD
 if [ -z "${PASS}" ]; then
    echo "The domain password is blank.  The Admin password must be set in the properties file."
    exit
