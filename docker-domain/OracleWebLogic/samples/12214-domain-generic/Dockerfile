@@ -4,13 +4,13 @@
 #
 # ORACLE DOCKERFILES PROJECT
 # --------------------------
-# This is the Dockerfile for Oracle WebLogic 12.2.1.3 domain persisted on a Docker volume
+# This is the Dockerfile for Oracle WebLogic 12.2.1.4 domain persisted on a Docker volume
 #
 # HOW TO BUILD THIS IMAGE
 # -----------------------
-# This Oracle WebLogic domain image extends the Oracle WebLogic 12.2.1.3 developer image, you must first build the Oracle WebLogic 12.2.1.3 binary image.
+# This Oracle WebLogic domain image extends the Oracle WebLogic 12.2.1.4 developer image, you must first build the Oracle WebLogic 12.2.1.4 binary image.
 # Run:
-#      $ docker build -f Dockerfile -t 12213-weblogic-domain-in-volume .
+#      $ docker build -f Dockerfile -t 12214-weblogic-domain-in-volume .
 #
 # IMPORTANT
 # ---------
