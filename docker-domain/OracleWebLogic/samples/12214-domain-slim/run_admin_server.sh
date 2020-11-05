@@ -42,6 +42,6 @@ admin_host() {
 admin_host
 domain_host_volume
 
-echo "docker run -d -p 9001:7001 -p 9002:9002 --name ${adminhost} --hostname ${adminhost} -v ${scriptDir}/properties:/u01/oracle/properties -v ${domainhostvol}:/u01/oracle/user_projects/domains ${ENV_ARG} 12214-weblogic-domain-slim"
+echo "docker run -d -p 9001:7001 -p 9002:9002 --name ${adminhost} --hostname ${adminhost} -v ${scriptDir}/properties:/u01/oracle/properties:z -v ${domainhostvol}:/u01/oracle/user_projects/domains:z ${ENV_ARG} 12214-weblogic-domain-slim"
 
-docker run -d -p 9001:7001 -p 9002:9002 --name ${adminhost} --hostname ${adminhost} -v ${scriptDir}/properties:/u01/oracle/properties -v ${domainhostvol}:/u01/oracle/user_projects/domains ${ENV_ARG} 12214-weblogic-domain-slim 
+docker run -d -p 9001:7001 -p 9002:9002 --name ${adminhost} --hostname ${adminhost} -v ${scriptDir}/properties:/u01/oracle/properties:z -v ${domainhostvol}:/u01/oracle/user_projects/domains:z ${ENV_ARG} 12214-weblogic-domain-slim 
