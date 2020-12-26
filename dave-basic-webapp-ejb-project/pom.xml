@@ -106,7 +106,7 @@
   <parent>
     <groupId>com.oracle.weblogic.archetype</groupId>
     <artifactId>wls-common</artifactId>
-    <version>12.2.1-0-0</version>
+    <version>14.1.1-0-0</version>
   </parent>
   <dependencies>
     <dependency>
