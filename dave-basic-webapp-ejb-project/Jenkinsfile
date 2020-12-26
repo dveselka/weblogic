@@ -8,7 +8,7 @@ node {
 
         stage('Build') {
             dir("dave-basic-webapp-ejb-project") {
-               sh 'mvn clean package'
+               sh 'cd dave-basic-webapp-ejb-project; mvn clean package'
             }
 
             def pom = readMavenPom file:'pom.xml'
