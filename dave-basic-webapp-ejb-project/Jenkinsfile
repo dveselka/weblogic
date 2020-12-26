@@ -4,7 +4,9 @@ node {
               options: [
         artifactsPublisher(disabled: true), 
         findbugsPublisher(disabled: true), 
-        openTasksPublisher(disabled: true)]
+        openTasksPublisher(disabled: true),
+              junitPublisher(disabled: true)
+              ]
              ) {
 
         stage('Checkout') {
