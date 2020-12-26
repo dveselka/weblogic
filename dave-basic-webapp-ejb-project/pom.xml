@@ -139,7 +139,7 @@
       <plugin>
         <groupId>com.oracle.weblogic</groupId> 
         <artifactId>weblogic-maven-plugin</artifactId> 
-        <version>12.2.1-0-0</version> 
+        <version>14.1.1-0-0</version> 
         <!--
         You can find and redefine the following variables in the parent pom file arccording to your environment.
   
