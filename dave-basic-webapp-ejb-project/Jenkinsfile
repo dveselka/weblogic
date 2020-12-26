@@ -1,6 +1,11 @@
 node {
 
-    withMaven(maven:'local') {
+    withMaven(maven:'local',
+              options: [
+        artifactsPublisher(disabled: true), 
+        findbugsPublisher(disabled: true), 
+        openTasksPublisher(disabled: true)]
+             ) {
 
         stage('Checkout') {
           git url: 'https://github.com/dveselka/weblogic/', credentialsId: 'dave-devops', branch: 'weblogic-14.1.1'
