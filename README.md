@@ -2,6 +2,8 @@
 
 see https://docs.oracle.com/middleware/12211/lcm/MAVEN/weblogic_maven.htm#MAVEN8767
 
+JDBC driver https://blogs.oracle.com/developers/your-own-way-oracle-jdbc-drivers-19700-on-maven-central
+
 Sample mvn command
 
 ```
