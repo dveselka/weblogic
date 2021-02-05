@@ -1,3 +1,5 @@
+See blog post https://danielveselka.blogspot.com/2020/10/create-weblogic-docker-domain-using.html
+
 This creates Weblogic domain using Docker compose
 
 Oracle images oracle/weblogic:12.2.1.4-generic have to be created first - see HOWTO here  https://github.com/dveselka/weblogic/tree/master/docker-domain/
