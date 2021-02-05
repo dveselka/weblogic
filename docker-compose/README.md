@@ -12,3 +12,11 @@ oracle/weblogic     12.2.1.4-generic    eaf6a4a3dd74        7 seconds ago       
 oracle/serverjre    8                   454b13098b07        5 minutes ago       373MB
 oraclelinux         7-slim              977320706064        4 days ago          132MB
 ```
+
+
+Docker container 
+```
+[dave@dave docker-compose]$ docker ps
+CONTAINER ID        IMAGE                              COMMAND                  CREATED             STATUS              PORTS                                            NAMES
+7734bda43ce6        oracle/weblogic:12.2.1.4-generic   "/u01/oracle/createA…"   47 seconds ago      Up 46 seconds       0.0.0.0:7001->7001/tcp, 0.0.0.0:9002->9002/tcp   adminserver
+```
