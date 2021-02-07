@@ -6,7 +6,7 @@ networks:
 
 services:
   adminserver:
-    container_name: adminserver    
+    container_name: AdminContainer
     image: 12214-weblogic-domain-generic
     restart: "no" 
     environment:
@@ -43,5 +43,8 @@ services:
 
     networks:
       - *network
+    volumes:
+      - /app/domains/properties:/u01/oracle/properties:z
+      - /app/domains:/u01/oracle/user_projects/domains:z  
 
   
