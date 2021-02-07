@@ -10,6 +10,7 @@ services:
     image: oracle/weblogic:12.2.1.4-generic
     restart: "no" 
     environment:
+      JAVA_HOME: "/usr/java/latest"
       CUSTOM_DOMAIN_NAME: myDomain
       CUSTOM_ADMIN_NAME: myadmin
       CUSTOM_ADMIN_PORT: 7001
