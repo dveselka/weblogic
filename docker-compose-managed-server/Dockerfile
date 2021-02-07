@@ -4,13 +4,13 @@
 #
 # ORACLE DOCKERFILES PROJECT
 # --------------------------
-# This is the Dockerfile for Oracle WebLogic 12.2.1.3 domain persisted on a Docker volume
+# This is the Dockerfile for Oracle WebLogic 12.2.1.4 domain persisted on a Docker volume
 #
 # HOW TO BUILD THIS IMAGE
 # -----------------------
-# This Oracle WebLogic domain image extends the Oracle WebLogic 12.2.1.3 developer image, you must first build the Oracle WebLogic 12.2.1.3 binary image.
+# This Oracle WebLogic domain image extends the Oracle WebLogic 12.2.1.4 developer image, you must first build the Oracle WebLogic 12.2.1.4 binary image.
 # Run:
-#      $ docker build -f Dockerfile -t 12213-weblogic-domain-in-volume .
+#      $ docker build -f Dockerfile -t 12214-weblogic-domain-in-volume .
 #
 # IMPORTANT
 # ---------
@@ -22,7 +22,7 @@ FROM oracle/weblogic:12.2.1.4-generic
 
 # Maintainer
 # ----------
-MAINTAINER Monica Riccelli <monica.riccelli@oracle.com>
+MAINTAINER Daniel Veselka
 
 # WLS Configuration
 # -----------------
@@ -38,6 +38,7 @@ ENV CUSTOM_DOMAIN_NAME="${CUSTOM_DOMAIN_NAME:-base_domain}" \
     CUSTOM_CLUSTER_NAME="${CUSTOM_CLUSTER_NAME:-cluster1}" \
     CUSTOM_CLUSTER_TYPE="${CUSTOM_CLUSTER_TYPE:-DYNAMIC}" \
     CUSTOM_PRODUCTION_MODE_ENABLED="${CUSTOM_PRODUCTION_MODE_ENABLED:-prod}" \
+    PROPERTIES_FILE_DIR="/u01/oracle/properties" \
     CUSTOM_JAVA_OPTIONS="-Doracle.jdbc.fanEnabled=false -Dweblogic.StdoutDebugEnabled=false -Dweblogic.rjvm.enableprotocolswitch=true"  \
     CUSTOM_PATH="$PATH:${JAVA_HOME}/bin:/u01/oracle/oracle_common/common/bin:/u01/oracle/wlserver/common/bin:/u01/oracle/container-scripts"
 

@@ -1,0 +1,47 @@
+version: "3.8"
+
+networks:
+  &network wlsnet:
+    driver: bridge
+
+services:
+  adminserver:
+    container_name: adminserver    
+    image: 12214-weblogic-domain-generic
+    restart: "no" 
+    environment:
+      JAVA_HOME: "/usr/java/latest"
+      CUSTOM_PRODUCTION_MODE_ENABLED: "false"
+      CUSTOM_DOMAIN_HOME: /app/domains
+      CUSTOM_WEBLOGIC_USER: weblogic
+      CUSTOM_WEBLOGIC_PASSWORD: weblogic123
+    ports:
+      - "7001:7001"
+      - "9002:9002"
+    networks:
+      - *network
+    volumes:
+      - /app/domains/properties:/u01/oracle/properties:z
+      - /app/domains:/u01/oracle/user_projects/domains:z
+
+
+  managedserver:
+    container_name: managedserver    
+    image: 12214-weblogic-domain-generic
+    command: /u01/oracle/container-scripts/startManagedServer.sh 
+    restart: "no" 
+    environment:
+      JAVA_HOME: "/usr/java/latest"
+      CUSTOM_PRODUCTION_MODE_ENABLED: "false"
+      CUSTOM_DOMAIN_HOME: /app/domains
+      CUSTOM_WEBLOGIC_USER: weblogic
+      CUSTOM_WEBLOGIC_PASSWORD: weblogic123
+    ports:
+      - "8001:8001"
+    depends_on:
+      - adminserver
+
+    networks:
+      - *network
+
+  
