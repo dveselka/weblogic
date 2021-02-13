@@ -6,14 +6,17 @@ networks:
 
 services:
   adminserver:
-    container_name: AdminContainer
+    container_name: adminserver
+    hostname: adminserver
     image: 12214-weblogic-domain-generic
     restart: "no" 
     environment:
       JAVA_HOME: "/usr/java/latest"
       CUSTOM_PRODUCTION_MODE_ENABLED: "false"
-      CUSTOM_DOMAIN_HOME: /app/domains
-      CUSTOM_WEBLOGIC_USER: weblogic
+      CUSTOM_DOMAIN_NAME: daveDomain
+      CUSTOM_DOMAIN_ROOT: /app/domains
+      CUSTOM_DOMAIN_HOME: /app/domains/daveDomain
+      CUSTOM_WEBLOGIC_USERNAME: weblogic
       CUSTOM_WEBLOGIC_PASSWORD: weblogic123
     ports:
       - "7001:7001"
@@ -21,8 +24,7 @@ services:
     networks:
       - *network
     volumes:
-      - /app/domains/properties:/u01/oracle/properties:z
-      - /app/domains:/u01/oracle/user_projects/domains:z
+      - /app/domains:/app/domains:z
 
 
   managedserver:
@@ -34,7 +36,7 @@ services:
       JAVA_HOME: "/usr/java/latest"
       CUSTOM_PRODUCTION_MODE_ENABLED: "false"
       CUSTOM_DOMAIN_HOME: /app/domains
-      CUSTOM_WEBLOGIC_USER: weblogic
+      CUSTOM_WEBLOGIC_USERNAME: weblogic
       CUSTOM_WEBLOGIC_PASSWORD: weblogic123
     ports:
       - "8001:8001"
@@ -44,7 +46,6 @@ services:
     networks:
       - *network
     volumes:
-      - /app/domains/properties:/u01/oracle/properties:z
-      - /app/domains:/u01/oracle/user_projects/domains:z  
+      - /app/domains:/app/domains:z  
 
   

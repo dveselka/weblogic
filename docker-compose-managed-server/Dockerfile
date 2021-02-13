@@ -26,11 +26,11 @@ MAINTAINER Daniel Veselka
 
 # WLS Configuration
 # -----------------
-ENV CUSTOM_DOMAIN_NAME="${CUSTOM_DOMAIN_NAME:-base_domain}" \
-    CUSTOM_DOMAIN_ROOT="/u01/oracle/user_projects/domains" \
+ENV CUSTOM_DOMAIN_NAME="${CUSTOM_DOMAIN_NAME:-daveDomain}" \
+    CUSTOM_DOMAIN_ROOT="/app/domains" \
     CUSTOM_ADMIN_PORT="${CUSTOM_ADMIN_PORT:-7001}" \
-    CUSTOM_ADMIN_NAME="${CUSTOM_ADMIN_NAME:-AdminServer}" \
-    CUSTOM_ADMIN_HOST="${CUSTOM_ADMIN_HOST:-AdminContainer}" \
+    CUSTOM_ADMIN_NAME="${CUSTOM_ADMIN_NAME:-adminserver}" \
+    CUSTOM_ADMIN_HOST="${CUSTOM_ADMIN_HOST:-adminserver}" \
     CUSTOM_MANAGED_SERVER_PORT="${CUSTOM_MANAGED_SERVER_PORT:-8001}" \
     CUSTOM_MANAGED_SERVER_NAME_BASE="${CUSTOM_MANAGED_SERVER_NAME_BASE:-MS}" \
     CUSTOM_CONFIGURED_MANAGED_SERVER_COUNT="${CUSTOM_CONFIGURED_MANAGED_SERVER_COUNT:-2}" \
@@ -38,7 +38,7 @@ ENV CUSTOM_DOMAIN_NAME="${CUSTOM_DOMAIN_NAME:-base_domain}" \
     CUSTOM_CLUSTER_NAME="${CUSTOM_CLUSTER_NAME:-cluster1}" \
     CUSTOM_CLUSTER_TYPE="${CUSTOM_CLUSTER_TYPE:-DYNAMIC}" \
     CUSTOM_PRODUCTION_MODE_ENABLED="${CUSTOM_PRODUCTION_MODE_ENABLED:-prod}" \
-    PROPERTIES_FILE_DIR="/u01/oracle/properties" \
+    PROPERTIES_FILE_DIR="/app/domains/properties" \
     CUSTOM_JAVA_OPTIONS="-Doracle.jdbc.fanEnabled=false -Dweblogic.StdoutDebugEnabled=false -Dweblogic.rjvm.enableprotocolswitch=true"  \
     CUSTOM_PATH="$PATH:${JAVA_HOME}/bin:/u01/oracle/oracle_common/common/bin:/u01/oracle/wlserver/common/bin:/u01/oracle/container-scripts"
 
@@ -50,14 +50,13 @@ USER root
 RUN mkdir -p $CUSTOM_DOMAIN_ROOT && \
     chown -R oracle:oracle $CUSTOM_DOMAIN_ROOT/.. && \
     chmod -R a+xwr $CUSTOM_DOMAIN_ROOT/.. && \
-    mkdir -p $ORACLE_HOME/properties && \
-    chmod -R a+r $ORACLE_HOME/properties && \ 
     chmod +x /u01/oracle/container-scripts/*
 
 RUN ln -s  /usr/java/latest/ /usr/java/jdk-8
 
+USER oracle
+
 VOLUME $CUSTOM_DOMAIN_ROOT
 
-USER oracle
 WORKDIR $ORACLE_HOME
 CMD ["/u01/oracle/container-scripts/createWLSDomain.sh"]

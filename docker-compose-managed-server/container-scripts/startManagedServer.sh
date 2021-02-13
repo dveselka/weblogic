@@ -19,7 +19,7 @@ echo "Managed Server Home: ${MS_HOME}"
 echo "Managed Server Security: ${MS_SECURITY}"
 
 #  Create Domain only if 1st execution
-SEC_PROPERTIES_FILE=/u01/oracle/properties/domain_security.properties
+SEC_PROPERTIES_FILE=${CUSTOM_DOMAIN_ROOT}/properties/domain_security.properties
 if [ ! -e "$SEC_PROPERTIES_FILE" ]; then
     echo "A properties file with the username and password needs to be supplied."
     exit

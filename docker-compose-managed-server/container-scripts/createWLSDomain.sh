@@ -30,7 +30,7 @@ trap _kill SIGKILL
 export DOMAIN_HOME=$CUSTOM_DOMAIN_ROOT/$CUSTOM_DOMAIN_NAME
 echo "Domain Home is:  $DOMAIN_HOME"
 
-SEC_PROPERTIES_FILE=${PROPERTIES_FILE_DIR}/domain_security.properties
+SEC_PROPERTIES_FILE=${CUSTOM_DOMAIN_ROOT}/properties/domain_security.properties
 echo $SEC_PROPERTIES_FILE
 if [ ! -e "${SEC_PROPERTIES_FILE}" ]; then
    echo "A properties file with the username and password needs to be supplied."
@@ -51,7 +51,7 @@ if [ -z "${PASS}" ]; then
    exit
 fi
 
-DOMAIN_PROPERTIES_FILE=${PROPERTIES_FILE_DIR}/domain.properties
+DOMAIN_PROPERTIES_FILE=${CUSTOM_DOMAIN_ROOT}/properties/domain.properties
 echo $DOMAIN_PROPERTIES_FILE
 if [ ! -e "${DOMAIN_PROPERTIES_FILE}" ]; then
    echo "A Domain properties file needs to be supplied."
