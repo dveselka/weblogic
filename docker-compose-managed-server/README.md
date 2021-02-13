@@ -8,6 +8,11 @@ See blog
 * https://danielveselka.blogspot.com/2021/02/create-centos-8-oracle-jdk-docker-image.html
 
 
+Add JAVA_OPTION
+```
+-Dweblogic.rjvm.enableprotocolswitch=true
+```
+
 
 
 Oracle WebLogic domain in volume on Docker
