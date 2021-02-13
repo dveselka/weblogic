@@ -1,6 +1,12 @@
 HOWTO
 * https://docs.docker.com/engine/reference/builder/
 
+See blog 
+* https://danielveselka.blogspot.com/2021/02/docker-network-between-standalone.html
+* https://danielveselka.blogspot.com/2021/02/create-weblogic-docker-domain-with.html
+* https://danielveselka.blogspot.com/2021/02/create-oracle-weblogic-docker-images.html
+* https://danielveselka.blogspot.com/2021/02/create-centos-8-oracle-jdk-docker-image.html
+
 
 
 
