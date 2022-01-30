@@ -12,10 +12,9 @@
   
   <properties>
       <oracleMiddlewareHome>/app/weblogic/</oracleMiddlewareHome>
-      <oracleServerUrl>t3://localhost:9001</oracleServerUrl>
-      <oracleUsername>weblogic</oracleUsername>
-      <oraclePassword>weblogic123</oraclePassword>
-      <oracleServerName></oracleServerName>
+     	<oracleMiddlewareHome>/home/app/weblogic</oracleMiddlewareHome>
+		<oracleUsername>weblogic</oracleUsername>
+		<oraclePassword>weblogic123</oraclePassword>
   </properties>
 
 
@@ -43,8 +42,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>11</source>
+          <target>11</target>
         </configuration>
       </plugin>
       <plugin>
@@ -58,7 +57,7 @@
       <plugin>
         <groupId>com.oracle.weblogic</groupId> 
         <artifactId>weblogic-maven-plugin</artifactId> 
-        <version>12.2.1-4-0</version> 
+         <version>14.1.1-0-0</version>
         <!--
         You can find and redefine the following variables in the parent pom file arccording to your environment.
   
