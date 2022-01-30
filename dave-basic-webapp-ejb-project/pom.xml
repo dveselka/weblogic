@@ -13,6 +13,7 @@
 
   <dependencyManagement>
     <dependencies>
+
       <dependency>
        <groupId>com.oracle.database.jdbc</groupId>
        <artifactId>ojdbc-bom</artifactId>
@@ -23,16 +24,29 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+      <dependency>
+       <groupId>com.oracle.weblogic</groupId>
+       <artifactId>weblogic-server-pom</artifactId>
+       <version>14.1.1-0-0</version>
+       <type>pom</type>
+       <scope>provided</scope>
+      </dependency>
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-web-api</artifactId>
-      <version>7.0</version>
+      <version>6.0</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
         <groupId>com.oracle.database.jdbc</groupId>
         <artifactId>ojdbc8</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.oracle.weblogic</groupId>
+      <artifactId>weblogic-maven-plugin</artifactId>
+      <version>14.1.1-0-0</version>
     </dependency>
 
   </dependencies>
@@ -51,10 +65,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.9.0</version>
+        <version>2.3.2</version>
         <configuration>
-		<source>11</source>
-		<target>11</target>
+		<source>1.8</source>
+		<target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
@@ -69,6 +83,7 @@
         <groupId>com.oracle.weblogic</groupId> 
         <artifactId>weblogic-maven-plugin</artifactId> 
         <version>14.1.1-0-0</version> 
+
         <!--
         You can find and redefine the following variables in the parent pom file arccording to your environment.
   
@@ -78,21 +93,13 @@
         oraclePassword
         oracleServerName
         -->
-        <configuration> 
-		<middlewareHome>/app/weblogic-14.1.1</middlewareHome>
-        </configuration> 
+   	    <configuration>
+   	      <middlewareHome>/app/weblogic</middlewareHome>
+          <additionalClasspathElements>
+            <additionalClasspathElement>/app/weblogic/wlserver/modules/com.oracle.weblogic.package.jar</additionalClasspathElement>
+          </additionalClasspathElements>
+        </configuration>
         <executions>
-	<!-- Execute the appc goal during the package phase -->
-          <execution>
-            <id>wls-appc</id>
-            <phase>package</phase>
-            <goals>
-              <goal>appc</goal>
-            </goals>
-            <configuration>
-               <source>${project.build.directory}/${project.name}.${project.packaging}</source>
-            </configuration>
-          </execution>
           <!--Deploy the application to the server-->
           <execution>
             <phase>pre-integration-test</phase> 
@@ -114,6 +121,23 @@
             </configuration> 
           </execution> 
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.oracle.weblogic</groupId>
+            <artifactId>com.oracle.weblogic.package</artifactId>
+            <version>14.1.1-0-0 </version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12.4</version>
+        <configuration>
+          <additionalClasspathElements>
+            <additionalClasspathElement>/app/weblogic/wlserver/server/lib/weblogic.jar</additionalClasspathElement>
+          </additionalClasspathElements>
+        </configuration>
       </plugin>
     </plugins>
   </build>
