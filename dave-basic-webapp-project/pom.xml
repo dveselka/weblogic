@@ -103,14 +103,19 @@
   </licenses>
   <!-- End elements of Oracle products and licenses -->
   
-  <parent>
-    <groupId>com.oracle.weblogic.archetype</groupId>
-    <artifactId>wls-common</artifactId>
-    <version>14.1.1-0-0</version>
-  </parent>
-  <properties>
+	<parent>
+		<groupId>com.oracle.weblogic.archetype</groupId>
+		<artifactId>wls-common</artifactId>
+		<version>14.1.1-0-0</version>
+	</parent>
+	
+	<properties>
+		<oracleMiddlewareHome>/home/app/weblogic</oracleMiddlewareHome>
+		<oracleUsername>weblogic</oracleUsername>
+		<oraclePassword>weblogic123</oraclePassword>
+	</properties>
 
-  </properties>
+
   <dependencies>
     <dependency>
       <groupId>javax</groupId>
@@ -125,16 +130,16 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.8.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>11</source>
+          <target>11</target>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.1.1</version>
+        <version>3.3.2</version>
         <configuration>
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>

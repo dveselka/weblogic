@@ -1,4 +1,4 @@
-package org.dave;
+package dave;
 
 // Import the standard JWS annotation interfaces
 

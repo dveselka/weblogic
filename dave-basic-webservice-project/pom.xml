@@ -102,16 +102,41 @@
     </license>
   </licenses>
   <!-- End elements of Oracle products and licenses -->
-  
   <parent>
     <groupId>com.oracle.weblogic.archetype</groupId>
     <artifactId>wls-common</artifactId>
-    <version>12.2.1-0-0</version>
+    <version>14.1.1-0-0</version>
   </parent>
   <properties>
      <web-context-root>basicWebservice</web-context-root>
-     <packageUrl>org/dave</packageUrl>
+     <packageUrl>dave</packageUrl>
+		<oracleMiddlewareHome>/home/app/weblogic</oracleMiddlewareHome>
+		<oracleUsername>weblogic</oracleUsername>
+		<oraclePassword>weblogic123</oraclePassword>
   </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.oracle.java.jaxws</groupId>
+      <artifactId>jakarta.xml.jws.jakarta.xml.jws-api</artifactId>
+      <version>[14.1.1-0-0,14.1.2-0-0)</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle.weblogic</groupId>
+      <artifactId>jakarta.xml.bind.jakarta.xml.bind-api</artifactId>
+      <version>[2.3.0,2.3.2)</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle.weblogic</groupId>
+      <artifactId>weblogic-server-pom</artifactId>
+      <version>[14.1.1-0-0,14.1.2-0-0)</version>
+      <type>pom</type>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
   <build>
     <finalName>basicWebservice</finalName>
     <plugins>
@@ -120,8 +145,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
@@ -138,7 +163,7 @@
       <plugin>
         <groupId>com.oracle.weblogic</groupId> 
         <artifactId>weblogic-maven-plugin</artifactId> 
-        <version>12.2.1-0-0</version> 
+        <version>14.1.1-0-0</version> 
         <!--
         You can find and redefine the following variables in the parent pom file arccording to your environment.
   
@@ -184,8 +209,8 @@
             <configuration> 
               <!--The admin URL where the app is deployed. Here use the plugin's default value t3://localhost:7001-->
               <!--adminurl>${oracleServerUrl}</adminurl-->
-              <user>weblogic</user> 
-              <password>weblogic123</password>
+              <user>${oracleUsername}</user> 
+              <password>${oraclePassword}</password>
               <!--The location of the file or directory to be deployed-->
               <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
               <!--The target servers where the application is deployed. Here use the plugin's default value AdminServer-->
