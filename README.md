@@ -17,7 +17,7 @@ See the blog for details
 
 * Maven https://danielveselka.blogspot.com/2019/10/deploy-java-ee7-app-into-weblogic.html
 
-### Docker andk8s
+### Docker and k8s
 
 * Weblogic Docker domain https://danielveselka.blogspot.com/2020/10/create-weblogic-12214-docker-image-with.html
 
