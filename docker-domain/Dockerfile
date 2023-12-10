@@ -1,71 +1,64 @@
-# LICENSE UPL 1.0
+#Copyright (c) 2019, 2020,  Oracle and/or its affiliates.
 #
-# Copyright (c) 2014-2018 Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 #
 # ORACLE DOCKERFILES PROJECT
 # --------------------------
-# This Dockerfile extends the Oracle WebLogic image by creating a sample domain.
-#
-# The 'base-domain' created here has Java EE 7 APIs enabled by default:
-#  - JAX-RS 2.0 shared lib deployed
-#  - JPA 2.1,
-#  - WebSockets and JSON-P
-#
-# Util scripts are copied into the image enabling users to plug NodeManager
-# magically into the AdminServer running on another container as a Machine.
+# This is the Dockerfile for Oracle WebLogic 12.2.1.3 domain persisted on a Docker volume
 #
 # HOW TO BUILD THIS IMAGE
 # -----------------------
-# Put all downloaded files in the same directory as this Dockerfile
+# This Oracle WebLogic domain image extends the Oracle WebLogic 12.2.1.3 developer image, you must first build the Oracle WebLogic 12.2.1.3 binary image.
 # Run:
-#      $ sudo docker build -t 1213-domain --build-arg ADMIN_PASSWORD=welcome1 .
+#      $ docker build -f Dockerfile -t 12213-weblogic-domain-in-volume .
 #
+# IMPORTANT
+# ---------
+# The resulting image of this Dockerfile contains a WebLogic Domain.
+#
+# From
+# ----
+FROM oracle/weblogic:12.2.1.3-developer
 
-# Pull base image
-# ---------------
-FROM oracle/weblogic:14.1.1.0-generic-11
-
-# Maintainer
-# ----------
-MAINTAINER Monica Riccelli <monica.riccelli@oracle.com>
+# Labels
+# ------
+LABEL "provider"="Oracle"                                               \
+      "maintainer"="Monica Riccelli <monica.riccelli@oracle.com>"       \
+      "issues"="https://github.com/oracle/docker-images/issues"         \
+      "port.admin.listen"="7001"                                        \
+      "port.administration"="9002"                                      \
+      "port.managed.server"="8001"                                      
 
 # WLS Configuration
-# -------------------------------
-ARG ADMIN_PASSWORD
-ARG PRODUCTION_MODE
-
-ENV DOMAIN_NAME="base_domain" \
-    PRE_DOMAIN_HOME=/u01/oracle/user_projects \
-    ADMIN_PORT="7001" \
-    ADMIN_HOST="wlsadmin" \
-    NM_PORT="5556" \
-    MS_PORT="7002" \
-    CONFIG_JVM_ARGS="-Dweblogic.security.SSL.ignoreHostnameVerification=true" \
-    PATH=$PATH:/u01/oracle/oracle_common/common/bin:/u01/oracle/wlserver/common/bin:$PRE_DOMAIN_HOME/domains/base_domain:$PRE_DOMAIN_HOME/domains/base_domain/bin:/u01/oracle
+# -----------------
+ENV DOMAIN_ROOT="/u01/oracle/user_projects/domains" \
+    ADMIN_HOST="${ADMIN_HOST:-AdminContainer}" \
+    MANAGED_SERVER_PORT="${MANAGED_SERVER_PORT:-8001}" \
+    MANAGED_SERVER_NAME_BASE="${MANAGED_SERVER_NAME_BASE:-MS}" \
+    MANAGED_SERVER_CONTAINER="${MANAGED_SERVER_CONTAINER:-false}" \
+    CONFIGURED_MANAGED_SERVER_COUNT="${CONFIGURED_MANAGED_SERVER_COUNT:-2}" \
+    MANAGED_NAME="${MANAGED_NAME:-MS1}" \
+    CLUSTER_NAME="${CLUSTER_NAME:-cluster1}" \
+    CLUSTER_TYPE="${CLUSTER_TYPE:-DYNAMIC}" \
+    PROPERTIES_FILE_DIR="/u01/oracle/properties" \
+    JAVA_OPTIONS="-Doracle.jdbc.fanEnabled=false -Dweblogic.StdoutDebugEnabled=false"  \
+    PATH="$PATH:${JAVA_HOME}/bin:/u01/oracle/oracle_common/common/bin:/u01/oracle/wlserver/common/bin:/u01/oracle/container-scripts"
 
 # Add files required to build this image
-COPY container-scripts/* /u01/oracle/
+COPY --chown=oracle:oracle container-scripts/* /u01/oracle/container-scripts/
+COPY --chown=oracle:oracle container-scripts/get_healthcheck_url.sh /u01/oracle/get_healthcheck_url.sh
 
-# Configuration of WLS Domain
+#Create directory where domain will be written to
 USER root
-WORKDIR /u01/oracle
-RUN /u01/oracle/wlst /u01/oracle/create-wls-domain.py && \
-    mkdir -p $PRE_DOMAIN_HOME && \
-    chmod a+xr $PRE_DOMAIN_HOME && \
-    chown -R oracle:oracle $PRE_DOMAIN_HOME && \
-    mkdir -p $PRE_DOMAIN_HOME/domains/base_domain/servers/AdminServer/security && \
-    echo "username=weblogic" > $PRE_DOMAIN_HOME/domains/base_domain/servers/AdminServer/security/boot.properties && \
-    echo "password=$ADMIN_PASSWORD" >> $PRE_DOMAIN_HOME/domains/base_domain/servers/AdminServer/security/boot.properties && \
-    echo ". $PRE_DOMAIN_HOME/domains/base_domain/bin/setDomainEnv.sh" >> /u01/oracle/.bashrc && \
-    echo "export PATH=$PATH:/u01/oracle/wlserver/common/bin:$PRE_DOMAIN_HOME/domains/base_domain/bin" >> /u01/oracle/.bashrc && \
-    cp /u01/oracle/commEnv.sh /u01/oracle/wlserver/common/bin/commEnv.sh && \
-    rm /u01/oracle/create-wls-domain.py /u01/oracle/jaxrs2-template.jar
+RUN mkdir -p $DOMAIN_ROOT && \
+    chown -R oracle:oracle $DOMAIN_ROOT/.. && \
+    chmod -R a+xwr $DOMAIN_ROOT/.. && \
+    mkdir -p $ORACLE_HOME/properties && \
+    chmod -R a+r $ORACLE_HOME/properties && \ 
+    chmod +x /u01/oracle/container-scripts/*
 
-# Expose Node Manager default port, and also default http/https ports for admin console
-EXPOSE $NM_PORT $ADMIN_PORT $MS_PORT
+VOLUME $DOMAIN_ROOT
 
 USER oracle
-WORKDIR $PRE_DOMAIN_HOME/domains/base_domain
-
-# Define default command to start bash.
-CMD ["/u01/oracle/user_projects/domains/base_domain/startWebLogic.sh"]
+WORKDIR $ORACLE_HOME
+CMD ["/u01/oracle/container-scripts/createWLSDomain.sh"]
