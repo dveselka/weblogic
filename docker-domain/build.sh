@@ -6,4 +6,4 @@
 #
 #Build WebLogic Domain image persisted to volume
 
-docker build -f Dockerfile -t 12213-weblogic-domain-in-volume .
+docker build -f Dockerfile -t 1411-weblogic-domain-in-volume .

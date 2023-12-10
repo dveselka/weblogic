@@ -10,7 +10,7 @@
 # -----------------------
 # This Oracle WebLogic domain image extends the Oracle WebLogic 12.2.1.3 developer image, you must first build the Oracle WebLogic 12.2.1.3 binary image.
 # Run:
-#      $ docker build -f Dockerfile -t 12213-weblogic-domain-in-volume .
+#      $ docker build -f Dockerfile -t 1411-weblogic-domain-in-volume .
 #
 # IMPORTANT
 # ---------
@@ -18,7 +18,7 @@
 #
 # From
 # ----
-FROM oracle/weblogic:12.2.1.3-developer
+FROM oracle/weblogic:14.1.1.0-generic-11
 
 # Labels
 # ------

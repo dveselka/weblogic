@@ -49,6 +49,6 @@ admin_listen_port
 administration_port
 domain_host_volume
 
-echo "docker run -d -p 9001:${adminport} -p 9002:${administrationport} --name ${adminhost} --hostname ${adminhost} -v ${scriptDir}/properties:/u01/oracle/properties -v ${domainhostvol}:/u01/oracle/user_projects/domains ${ENV_ARG} 12213-weblogic-domain-in-volume"
+echo "docker run -d -p 9001:${adminport} --name ${adminhost} --hostname ${adminhost} -v /app/domains/properties:/u01/oracle/properties -v ${domainhostvol}:/u01/oracle/user_projects/domains ${ENV_ARG} 1411-weblogic-domain-in-volume"
 
-docker run -d -p 9001:${adminport} -p 9002:${administrationport} --name ${adminhost} --hostname ${adminhost} -v ${scriptDir}/properties:/u01/oracle/properties -v ${domainhostvol}:/u01/oracle/user_projects/domains ${ENV_ARG} 12213-weblogic-domain-in-volume
+docker run -d -p 9001:${adminport} --name ${adminhost} --hostname ${adminhost} -v /app/domains/properties:/u01/oracle/properties:z -v ${domainhostvol}:/u01/oracle/user_projects/domains:z ${ENV_ARG} 1411-weblogic-domain-in-volume
