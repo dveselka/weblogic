@@ -27,4 +27,4 @@ spec:
     services:
     - kind: Service
       name: sample-domain1-cluster-cluster-1
-      port: 8001
+      port: 8801
