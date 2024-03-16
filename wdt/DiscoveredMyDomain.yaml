@@ -1,0 +1,41 @@
+# This model was created using the WebLogic Deploy Tooling 3.5.4 discoverDomain tool
+# running in OFFLINE mode against a domain using WebLogic Server 14.1.1.0.0.
+# 
+domainInfo:
+    AdminUserName: --FIX ME--
+    AdminPassword: --FIX ME--
+topology:
+    Name: myDomain
+    AdminServerName: myadmin
+    Log:
+        FileName: myDomain.log
+    NMProperties:
+        DomainsFile: /u01/oracle/user_projects/domains/myDomain/nodemanager/nodemanager.domains
+        LogFile: /u01/oracle/user_projects/domains/myDomain/nodemanager/nodemanager.log
+        JavaHome: /usr/lib/jvm/jdk-11-oracle-x64
+        NodeManagerHome: /u01/oracle/user_projects/domains/myDomain/nodemanager
+    Cluster:
+        cluster1:
+            DynamicServers:
+                DynamicClusterSize: 2
+                MaxDynamicClusterSize: 2
+                ServerNamePrefix: MS
+                ServerTemplate: cluster1-template
+                CalculatedListenPorts: false
+                MaximumDynamicServerCount: 2
+    Server:
+        myadmin: {}
+    ServerTemplate:
+        cluster1-template:
+            Cluster: cluster1
+            ListenPort: 8001
+            JTAMigratableTarget:
+                Cluster: cluster1
+                MigrationPolicy: manual
+appDeployments:
+    Application:
+        basicWebappEjb:
+            SourcePath: wlsdeploy/applications/basicWebappEjb.war
+            ModuleType: war
+            Target: cluster1
+            SecurityDDModel: DDOnly
