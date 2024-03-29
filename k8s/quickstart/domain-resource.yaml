@@ -143,5 +143,5 @@ metadata:
     weblogic.domainUID: sample-domain1
 
 spec:
-  replicas: 1
+  replicas: 2
   clusterName: cluster-1
