@@ -1,0 +1,91 @@
+# This model was created using the WebLogic Deploy Tooling 3.5.4 discoverDomain tool
+# running in ONLINE mode against a domain using WebLogic Server 14.1.1.0.0.
+# 
+domainInfo:
+    AdminUserName: weblogic
+    AdminPassword: weblogic123 
+topology:
+    Name: base_domain
+    Cluster:
+        ClusterA: {}
+        ClusterB: {}
+    Server:
+        AdminServer:
+            Machine: machineA
+        ManagedServerA1:
+            ListenPort: 7003
+            Machine: machineA
+            Cluster: ClusterA
+            JTAMigratableTarget:
+                UserPreferredServer: ManagedServerA1
+                Cluster: ClusterA
+        ManagedServerA2:
+            ListenPort: 7004
+            Machine: machineA
+            Cluster: ClusterA
+            JTAMigratableTarget:
+                UserPreferredServer: ManagedServerA2
+                Cluster: ClusterA
+        ManagedServerB1:
+            ListenPort: 7005
+            Machine: machineB
+            Cluster: ClusterB
+            JTAMigratableTarget:
+                UserPreferredServer: ManagedServerB1
+                Cluster: ClusterB
+        ManagedServerB2:
+            ListenPort: 7006
+            Machine: machineB
+            Cluster: ClusterB
+            JTAMigratableTarget:
+                UserPreferredServer: ManagedServerB2
+                Cluster: ClusterB
+    MigratableTarget:
+        ManagedServerA1 (migratable):
+            Notes: This is a system generated default migratable target for a server.
+                Do not delete manually.
+            UserPreferredServer: ManagedServerA1
+            Cluster: ClusterA
+        ManagedServerA2 (migratable):
+            Notes: This is a system generated default migratable target for a server.
+                Do not delete manually.
+            UserPreferredServer: ManagedServerA2
+            Cluster: ClusterA
+        ManagedServerB1 (migratable):
+            Notes: This is a system generated default migratable target for a server.
+                Do not delete manually.
+            UserPreferredServer: ManagedServerB1
+            Cluster: ClusterB
+        ManagedServerB2 (migratable):
+            Notes: This is a system generated default migratable target for a server.
+                Do not delete manually.
+            UserPreferredServer: ManagedServerB2
+            Cluster: ClusterB
+    Machine:
+        machineA: {}
+        machineB: {}
+    SecurityConfiguration:
+        NodeManagerPasswordEncrypted: weblogic123
+resources:
+    JDBCSystemResource:
+        JDBC-Data-Source-Oracle:
+            Target: ClusterA,ClusterB
+            JdbcResource:
+                DatasourceType: GENERIC
+                JDBCConnectionPoolParams:
+                    TestTableName: SQL ISVALID
+                JDBCDataSourceParams:
+                    JNDIName: jdbc/DaveOracle
+                JDBCDriverParams:
+                    DriverName: oracle.jdbc.OracleDriver
+                    PasswordEncrypted: weblogic123 
+                    URL: jdbc:oracle:thin:@//localhost:1521/FREE
+                    Properties:
+                        user:
+                            Value: dave
+appDeployments:
+    Application:
+        basicWebapp:
+            SourcePath: wlsdeploy/applications/basicWebapp.war
+            ModuleType: war
+            Target: ClusterA,ClusterB
