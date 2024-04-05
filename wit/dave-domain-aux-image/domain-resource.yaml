@@ -4,10 +4,10 @@
 apiVersion: "weblogic.oracle/v9"
 kind: Domain
 metadata:
-  name: sample-domain1
+  name: base-domain
   namespace: sample-domain1-ns
   labels:
-    weblogic.domainUID: sample-domain1
+    weblogic.domainUID: base-domain
 
 spec:
   configuration:
@@ -23,13 +23,13 @@ spec:
       #   `sourceModelHome`      - Model file directory in image, default `/auxiliary/models`.
       #   `sourceWDTInstallHome` - WDT install directory in image, default `/auxiliary/weblogic-deploy`.
       auxiliaryImages:
-        - image: "dave-aux-wdt-domain-image:WLS-1.0"
+        - image: "dave-aux-wdt-domain-image:WLS-1.4"
         #imagePullPolicy: IfNotPresent
         #sourceWDTInstallHome: /auxiliary/weblogic-deploy
         #sourceModelHome: /auxiliary/models
 
       # Optional configmap for additional models and variable files
-      #configMap: sample-domain1-wdt-config-map
+      #configMap: base-domain-wdt-config-map
 
       # All 'FromModel' domains require a runtimeEncryptionSecret with a 'password' field
       runtimeEncryptionSecret: sample-domain1-runtime-encryption-secret
@@ -39,7 +39,7 @@ spec:
 
   # The WebLogic Domain Home, this must be a location within
   # the image for 'Model in Image' domains.
-  domainHome: /u01/domains/sample-domain1
+  domainHome: /u01/domains/base-domain
 
   # The WebLogic Server image that the Operator uses to start the domain
   # **NOTE**:
@@ -71,7 +71,7 @@ spec:
 
   # The location for domain log, server logs, server out, introspector out, and Node Manager log files
   # see also 'logHomeEnabled', 'volumes', and 'volumeMounts'.
-  #logHome: /shared/logs/sample-domain1
+  #logHome: /shared/logs/base-domain
 
   # Set which WebLogic Servers the Operator will start
   # - "Never" will not start any server in the domain
@@ -96,7 +96,7 @@ spec:
     #volumes:
     #- name: weblogic-domain-storage-volume
     #  persistentVolumeClaim:
-    #    claimName: sample-domain1-weblogic-sample-pvc
+    #    claimName: base-domain-weblogic-sample-pvc
     #volumeMounts:
     #- mountPath: /shared
     #  name: weblogic-domain-storage-volume
@@ -114,34 +114,34 @@ spec:
 
   # The desired behavior for starting a specific cluster's member servers
   clusters:
-  - name: sample-domain1-cluster-1
+  - name: cluster1
 
   # Change the restartVersion to force the introspector job to rerun
   # and apply any new model configuration, to also force a subsequent
   # roll of your domain's WebLogic Server pods.
-  restartVersion: '1'
+  restartVersion: '2'
 
   # Changes to this field cause the operator to repeat its introspection of the
   #  WebLogic domain configuration.
-  introspectVersion: '1'
+  introspectVersion: '3'
 
     # Secrets that are referenced by model yaml macros
     # (the model yaml in the optional configMap or in the image)
     #secrets:
-    #- sample-domain1-datasource-secret
+    #- base-domain-datasource-secret
 
 ---
 
 apiVersion: "weblogic.oracle/v1"
 kind: Cluster
 metadata:
-  name: sample-domain1-cluster-1
+  name: cluster1
   # Update this with the namespace your domain will run in:
   namespace: sample-domain1-ns
   labels:
     # Update this with the `domainUID` of your domain:
-    weblogic.domainUID: sample-domain1
+    weblogic.domainUID: base-domain
 
 spec:
-  replicas: 2
-  clusterName: cluster-1
+  replicas: 1
+  clusterName: cluster1

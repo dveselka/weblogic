@@ -1,18 +1,36 @@
-apiVersion: weblogic.oracle/v8
+apiVersion: weblogic.oracle/v9
 kind: Domain
 metadata:
     name: base-domain
-    namespace: base-domain
+    namespace: sample-domain1-ns
     labels:
         weblogic.domainUID: base-domain
 spec:
-    domainHome: /app/weblogic/user_projects/domains/base_domain/
+    domainHome: /u01/domains/base_domain/
     domainHomeSourceType: FromModel
-    image: '{{{imageName}}}'
+    image: '"container-registry.oracle.com/middleware/weblogic:14.1.1.0'
     # Add any credential secrets that are required to pull the image
     imagePullSecrets: []
     webLogicCredentialsSecret:
         name: base-domain-weblogic-credentials
+
+ 
+    # Whether to include the WebLogic Server stdout in the pod's stdout, default is true
+    includeServerOutInPodLog: true
+
+    # Whether to enable overriding your log file location, see also 'logHome'
+    #logHomeEnabled: false
+  
+    # The location for domain log, server logs, server out, introspector out, and Node Manager log files
+    # see also 'logHomeEnabled', 'volumes', and 'volumeMounts'.
+    #logHome: /shared/logs/sample-domain1
+  
+    # Set which WebLogic Servers the Operator will start
+    # - "Never" will not start any server in the domain
+    # - "AdminOnly" will start up only the administration server (no managed servers will be started)
+    # - "IfNeeded" will start all non-clustered servers, including the administration server, and clustered servers up to their replica count.
+    #
+    serverStartPolicy: IfNeeded    
     serverPod:
         env:
           - name: JAVA_OPTIONS
@@ -58,3 +76,45 @@ spec:
             domainType: WLS
             modelHome: '{{{modelHome}}}'
             runtimeEncryptionSecret: base-domain-runtime-encryption-secret
+        # Optional auxiliary image(s) containing WDT model, archives, and install.
+        # Files are copied from `sourceModelHome` in the aux image to the `/aux/models` directory
+        # in running WebLogic Server pods, and files are copied from `sourceWDTInstallHome` 
+        # to the `/aux/weblogic-deploy` directory. Set `sourceModelHome` and/or `sourceWDTInstallHome` 
+        # to "None" if you want skip such copies.
+        #   `image`                - Image location
+        #   `imagePullPolicy`      - Pull policy, default `IfNotPresent`
+        #   `sourceModelHome`      - Model file directory in image, default `/auxiliary/models`.
+        #   `sourceWDTInstallHome` - WDT install directory in image, default `/auxiliary/weblogic-deploy`.
+        auxiliaryImages:
+        - image: "dave-aux-wdt-domain-image:WLS-1.0"
+          #imagePullPolicy: IfNotPresent
+          #sourceWDTInstallHome: /auxiliary/weblogic-deploy
+          #sourceModelHome: /auxiliary/models
+
+        # Optional configmap for additional models and variable files
+        #configMap: sample-domain1-wdt-config-map
+
+        # All 'FromModel' domains require a runtimeEncryptionSecret with a 'password' field
+        runtimeEncryptionSecret: base-domain-runtime-encryption-secret
+
+      # Secrets that are referenced by model yaml macros
+      # (the model yaml in the optional configMap or in the image)
+      #secrets:
+      #- sample-domain1-datasource-secret
+
+---   
+apiVersion: "weblogic.oracle/v1"
+kind: Cluster
+metadata:
+  name: base-domain-clusterA
+  # Update this with the namespace your domain will run in:
+  namespace: sample-domain1-ns
+  labels:
+    # Update this with the `domainUID` of your domain:
+    weblogic.domainUID: base-domain
+spec:
+  # This must match a cluster name that is  specified in the WebLogic configuration
+  clusterName: clusterA
+  # The number of managed servers to start for this cluster
+  replicas: 1
+         
