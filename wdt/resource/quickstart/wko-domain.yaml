@@ -1,0 +1,45 @@
+apiVersion: weblogic.oracle/v8
+kind: Domain
+metadata:
+    name: mydomain
+    namespace: mydomain
+    labels:
+        weblogic.domainUID: mydomain
+spec:
+    domainHome: /app/domains/myDomain/
+    domainHomeSourceType: FromModel
+    image: '{{{imageName}}}'
+    # Add any credential secrets that are required to pull the image
+    imagePullSecrets: []
+    webLogicCredentialsSecret:
+        name: mydomain-weblogic-credentials
+    serverPod:
+        env:
+          - name: JAVA_OPTIONS
+            value: -Dweblogic.StdoutDebugEnabled=false
+          - name: USER_MEM_ARGS
+            value: '-Djava.security.egd=file:/dev/./urandom -Xms64m -Xmx256m '
+    clusters:
+      - clusterName: cluster1
+        # replicas: 99  # Set a specific replica count for this cluster
+        serverPod:
+            affinity:
+                podAntiAffinity:
+                    preferredDuringSchedulingIgnoredDuringExecution:
+                      - weight: 100
+                        podAffinityTerm:
+                            labelSelector:
+                                matchExpressions:
+                                  - key: weblogic.clusterName
+                                    operator: In
+                                    values:
+                                      - $(CLUSTER_NAME)
+                            topologyKey: kubernetes.io/hostname
+    configuration:
+        istio:
+            enabled: false
+        introspectorJobActiveDeadlineSeconds: 900
+        model:
+            domainType: WLS
+            modelHome: '{{{modelHome}}}'
+            runtimeEncryptionSecret: mydomain-runtime-encryption-secret

@@ -88,11 +88,11 @@
             </goals>
             <configuration> 
               <!--The admin URL where the app is deployed. Here use the plugin's default value t3://localhost:7001-->
-              <adminurl>t3://127.0.0.1:7001</adminurl>
+              <adminurl>t3://172.17.0.2:7001</adminurl>
               <user>weblogic</user> 
               <password>weblogic123</password>
               <!--The location of the file or directory to be deployed-->
-              <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
+              <source>/app/domains/${project.build.finalName}.${project.packaging}</source>
               <!--The target servers where the application is deployed. Here use the plugin's default value AdminServer-->
               <!--targets>${oracleServerName}</targets-->
               <verbose>true</verbose> 
