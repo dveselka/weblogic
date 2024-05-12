@@ -5,6 +5,7 @@
     <!-- use the datasource defined in AccountManagerImpl class -->
     <jta-data-source>java:module/env/mavenArchetypeDataSource</jta-data-source>
     <class>dave.entity.Account</class>
+    <class>dave.entity.Bank</class>
     <properties>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
     </properties>
