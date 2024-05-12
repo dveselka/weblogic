@@ -32,6 +32,12 @@
         <artifactId>ojdbc8</artifactId>
     </dependency>
 
+      <dependency>
+        <groupId>com.oracle.weblogic</groupId>
+        <artifactId>com.oracle.weblogic.javaee</artifactId>
+        <version>14.1.1-0-0</version>
+      </dependency>
+
   </dependencies>
   <build>
     <finalName>basicWebappEjb</finalName>

@@ -6,9 +6,14 @@ package dave.service;
 
 import dave.entity.Bank;
 
+import javax.ejb.Local;
+import javax.ejb.Remote;
+
 /**
  * EJB Business Interface
  */
+@Local
+@Remote
 public interface BankManager {
 
   public Bank findBank(String name);

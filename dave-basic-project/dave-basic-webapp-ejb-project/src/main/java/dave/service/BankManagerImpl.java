@@ -6,6 +6,7 @@ package dave.service;
 
 import dave.entity.Account;
 import dave.entity.Bank;
+import weblogic.javaee.CallByReference;
 
 import javax.annotation.sql.DataSourceDefinition;
 import javax.ejb.Stateless;
@@ -13,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless
+@CallByReference
 //Data Source defined for JPA. It assume the derby database is started up and listen to localhost:1527
 @DataSourceDefinition(name = "java:module/env/mavenArchetypeDataSource", className = "org.apache.derby.jdbc.ClientXADataSource", portNumber = 1527, serverName = "localhost", databaseName = "examples", user = "examples", password = "examples", properties={"create=true", "weblogic.TestTableName=SQL SELECT 1 FROM SYS.SYSTABLES"})
 public class BankManagerImpl implements BankManager {

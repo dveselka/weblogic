@@ -6,9 +6,14 @@ package dave.service;
 
 import dave.entity.Account;
 
+import javax.ejb.Local;
+import javax.ejb.Remote;
+
 /**
  * EJB Business Interface
  */
+@Local
+@Remote
 public interface AccountManager {
 
   public void depositOnAccount(String name, float amount);
