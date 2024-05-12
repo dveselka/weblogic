@@ -86,6 +86,15 @@
         <groupId>com.oracle.weblogic</groupId> 
         <artifactId>weblogic-maven-plugin</artifactId> 
         <version>14.1.1-0-0</version> 
+	<dependencies>
+          <dependency>
+            <groupId>com.oracle.weblogic</groupId>
+            <artifactId>weblogic</artifactId>
+            <version>14.1.1-0-0</version>
+            <scope>system</scope>
+            <systemPath>/app/weblogic/weblogic-14.1.1/wlserver/server/lib/weblogic.jar</systemPath>
+         </dependency>
+        </dependencies>
         <!--
         You can find and redefine the following variables in the parent pom file arccording to your environment.
   
