@@ -14,7 +14,7 @@ import dave.entity.Account;
 @Stateless
 //Data Source defined for JPA. It assume the derby database is started up and listen to localhost:1527
 @DataSourceDefinition(name = "java:module/env/mavenArchetypeDataSource", className = "org.apache.derby.jdbc.ClientXADataSource", portNumber = 1527, serverName = "localhost", databaseName = "examples", user = "examples", password = "examples", properties={"create=true", "weblogic.TestTableName=SQL SELECT 1 FROM SYS.SYSTABLES"})
-public class AccountManagerImpl implements AccountManager {
+public class AccountManagerImpl implements AccountManager, AccountManagerRemote {
 
   @PersistenceContext
   private EntityManager em;

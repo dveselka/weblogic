@@ -108,6 +108,15 @@
     <artifactId>wls-common</artifactId>
     <version>14.1.2-0-0</version>
   </parent>
+  
+  <properties>
+    <oracleMiddlewareHome>/app/weblogic</oracleMiddlewareHome>
+    <oracleServerUrl>t3://localhost:7001</oracleServerUrl>
+    <oracleUsername>weblogic</oracleUsername>
+    <oraclePassword>weblogic123</oraclePassword>
+    <oracleServerName>AdminServer</oracleServerName>
+  </properties>
+  
   <dependencies>
     <dependency>
       <groupId>javax</groupId>
@@ -115,6 +124,21 @@
       <version>6.0</version>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.oracle.weblogic</groupId>
+      <artifactId>wlthint3client</artifactId>
+      <version>14.1.2-0-0</version>
+      <scope>system</scope>
+      <systemPath>${oracleMiddlewareHome}/wlserver/server/lib/wlthint3client.jar</systemPath>
+    </dependency>
+              <dependency>
+            <groupId>com.oracle.weblogic</groupId>
+            <artifactId>weblogic</artifactId>
+            <version>14.1.2-0-0</version>
+            <scope>system</scope>
+            <systemPath>/app/weblogic/wlserver/server/lib/weblogic.jar</systemPath>
+         </dependency>
   </dependencies>
   <build>
     <finalName>basicWebappEjb</finalName>
@@ -151,7 +175,16 @@
         -->
         <configuration> 
           <middlewareHome>${oracleMiddlewareHome}</middlewareHome>
-        </configuration> 
+        </configuration>
+        <dependencies>
+           <dependency>
+            <groupId>com.oracle.weblogic</groupId>
+            <artifactId>weblogic</artifactId>
+            <version>14.1.2-0-0</version>
+            <scope>system</scope>
+            <systemPath>/app/weblogic/wlserver/server/lib/weblogic.jar</systemPath>
+         </dependency>
+        </dependencies> 
         <executions>
           <!--Deploy the application to the server-->
           <execution>
@@ -161,7 +194,7 @@
             </goals>
             <configuration> 
               <!--The admin URL where the app is deployed. Here use the plugin's default value t3://localhost:7001-->
-              <!--adminurl>${oracleServerUrl}</adminurl-->
+              <adminurl>${oracleServerUrl}</adminurl>
               <user>${oracleUsername}</user> 
               <password>${oraclePassword}</password>
               <!--The location of the file or directory to be deployed-->
@@ -174,6 +207,20 @@
             </configuration> 
           </execution> 
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <mainClass>dave.client.AccountManagerClient</mainClass>
+          <cleanupDaemonThreads>false</cleanupDaemonThreads>
+          <includeProjectDependencies>true</includeProjectDependencies>
+          <includePluginDependencies>false</includePluginDependencies>
+          <additionalClasspathElements>
+            <additionalClasspathElement>${oracleMiddlewareHome}/wlserver/server/lib/wlthint3client.jar</additionalClasspathElement>
+          </additionalClasspathElements>
+        </configuration>
       </plugin>
     </plugins>
   </build>

@@ -4,14 +4,13 @@
  */
 package dave.service;
 
-import javax.ejb.Local;
+import javax.ejb.Remote;
 import dave.entity.Account;
 
 /**
- * EJB Business Interface - Local interface for CDI injection
+ * EJB Business Interface
  */
-@Local
-public interface AccountManager {
+public interface AccountManagerRemote {
 
   public void depositOnAccount(String name, float amount);
   
