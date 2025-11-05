@@ -32,10 +32,14 @@ public class AccountManagerClient {
      */
     // Multiple JNDI names to try - WebLogic registers EJBs with multiple patterns
     private static final String[] JNDI_NAMES = {
+        // Using custom name="AccountManagerEJB"
+        "java:global/basicWebappEjb/AccountManagerEJB!dave.service.AccountManagerRemote",
+        "java:global/basicWebappEjb/AccountManagerEJB",
+        // Fallback to default names
         "java:global/basicWebappEjb/AccountManagerImpl!dave.service.AccountManagerRemote",
         "java:global/basicWebappEjb/AccountManagerImpl",
-        "basicWebappEjb/AccountManagerImpl!dave.service.AccountManagerRemote",
-        "ejb/AccountManagerImpl#dave.service.AccountManagerRemote"
+        "basicWebappEjb/AccountManagerEJB!dave.service.AccountManagerRemote",
+        "ejb/AccountManager#dave.service.AccountManagerRemote"
     };
     
     public static void main(String[] args) {
