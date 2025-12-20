@@ -10,6 +10,7 @@ import dave.entity.Account;
 /**
  * EJB Business Interface
  */
+@Remote
 public interface AccountManagerRemote {
 
   public void depositOnAccount(String name, float amount);

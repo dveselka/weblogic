@@ -110,7 +110,7 @@
   </parent>
   
   <properties>
-    <oracleMiddlewareHome>/app/weblogic/weblogic-14.1.2</oracleMiddlewareHome>
+    <oracleMiddlewareHome>/app/weblogic-14.1.2</oracleMiddlewareHome>
     <oracleServerUrl>t3://localhost:7001</oracleServerUrl>
     <oracleUsername>weblogic</oracleUsername>
     <oraclePassword>weblogic123</oraclePassword>
@@ -148,8 +148,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>21</source>
+          <target>21</target>
         </configuration>
       </plugin>
       <plugin>
