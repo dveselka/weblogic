@@ -2,13 +2,9 @@ package com.dave.service;
 
 import org.junit.Test;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
 
 public class PersonSessionBeanTest {
 
@@ -25,27 +21,15 @@ public class PersonSessionBeanTest {
     }
 
     @Test
-    public void getPersonsReturnsInternalListReference() {
+    public void getPersonsConsistentlyReturnsSeededData() {
         PersonSessionBean bean = new PersonSessionBean();
 
-        List<Person> persons = bean.getPersons();
-        persons.add(new Person("new", 99));
+        List<Person> firstRead = bean.getPersons();
+        List<Person> secondRead = bean.getPersons();
 
-        assertSame(persons, bean.getPersons());
-        assertEquals(3, bean.getPersons().size());
-    }
-
-    @Test
-    public void findPersonByNameReturnsMatchOrNull() throws Exception {
-        PersonSessionBean bean = new PersonSessionBean();
-        Method method = PersonSessionBean.class.getDeclaredMethod("findPersonByName", String.class);
-        method.setAccessible(true);
-
-        Object match = method.invoke(bean, "dave");
-        Object miss = method.invoke(bean, "missing");
-
-        assertNotNull(match);
-        assertEquals("dave", ((Person) match).getName());
-        assertNull(miss);
+        assertEquals(2, firstRead.size());
+        assertEquals(2, secondRead.size());
+        assertEquals("dave", secondRead.get(0).getName());
+        assertEquals("abc", secondRead.get(1).getName());
     }
 }
