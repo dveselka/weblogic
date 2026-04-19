@@ -36,8 +36,12 @@ public class MyResourceTest {
     }
 
     @Test
-    public void getPersonReturnsNullForOutOfRangeOrNegativeId() {
+    public void getPersonReturnsNullForOutOfRangeId() {
         assertNull(resource.getPerson(2));
+    }
+
+    @Test
+    public void getPersonReturnsNullForNegativeId() {
         assertNull(resource.getPerson(-1));
     }
 }
