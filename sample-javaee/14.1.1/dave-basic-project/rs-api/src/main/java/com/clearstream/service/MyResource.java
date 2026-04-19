@@ -23,7 +23,7 @@ public class MyResource {
     @Produces({"application/json"})
     @Path("{id}")
     public Person getPerson(@PathParam("id") int id) {
-        if (id < bean.getPersons().size())
+        if (id >= 0 && id < bean.getPersons().size())
             return bean.getPersons().get(id);
         else
             return null;
