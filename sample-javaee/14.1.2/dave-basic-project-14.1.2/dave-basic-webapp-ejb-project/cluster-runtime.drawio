@@ -1,0 +1,66 @@
+<mxfile host="app.diagrams.net" modified="2026-08-01T00:00:00.000Z" agent="Copilot" version="24.7.17" type="device">
+  <diagram id="cluster-runtime" name="Cluster Runtime">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="client" value="JNDI Client\nAccountManagerClient" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="220" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin" value="AdminServer\n7002" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="60" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cluster" value="app-cluster" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="220" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ms1" value="managed-server1\n7003" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="150" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ms2" value="managed-server2\n7004" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="290" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="derby" value="Derby Network Server\n1527" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="420" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="client" target="cluster">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e2" style="endArrow=block;html=1;rounded=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="cluster" target="admin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e3" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="cluster" target="ms1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e4" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="cluster" target="ms2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e5" style="endArrow=block;html=1;rounded=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="ms1" target="derby">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e6" style="endArrow=block;html=1;rounded=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="ms2" target="derby">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="note1" value="Client connects via t3://127.0.0.1:7003,7004\nJNDI lookup + remote EJB calls" style="shape=note;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="180" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="note2" value="Deployment target\napp-cluster on AdminServer\nJMS resources and EJB app run on both managed servers" style="shape=note;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="760" y="120" width="260" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
