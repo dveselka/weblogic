@@ -1,6 +1,8 @@
 /* Copyright (c) 2012,2013, Oracle and/or its affiliates. All rights reserved.  */
 package dave.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -9,7 +11,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "MAVEN_ARCHETYPE_SAMPLE_ACCOUNT")
 @NamedQuery(name = "findAllAccounts", query = "SELECT a FROM Account a")
-public class Account {
+public class Account implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   @Id
   private String name;
   
