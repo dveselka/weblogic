@@ -111,10 +111,10 @@
   
   <properties>
     <oracleMiddlewareHome>/app/weblogic-14.1.2</oracleMiddlewareHome>
-    <oracleServerUrl>t3://127.0.0.1:7001</oracleServerUrl>
+    <oracleServerUrl>t3://127.0.0.1:7002</oracleServerUrl>
     <oracleUsername>weblogic</oracleUsername>
     <oraclePassword>weblogic123</oraclePassword>
-    <oracleServerName>AdminServer</oracleServerName>
+    <oracleServerName>app-cluster</oracleServerName>
   </properties>
   
   <dependencies>
@@ -198,8 +198,8 @@
               <password>${oraclePassword}</password>
               <!--The location of the file or directory to be deployed-->
               <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
-              <!--The target servers where the application is deployed. Here use the plugin's default value AdminServer-->
-              <!--targets>${oracleServerName}</targets-->
+              <!--The target cluster/server where the application is deployed-->
+              <targets>${oracleServerName}</targets>
               <verbose>true</verbose> 
               <!--The deployment name of the application-->
               <name>${project.build.finalName}</name>

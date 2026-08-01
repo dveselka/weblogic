@@ -14,7 +14,9 @@ import dave.entity.Account;
 public class AccountManagerClient {
 
     private static final String WEBLOGIC_JNDI_FACTORY = "weblogic.jndi.WLInitialContextFactory";
-    private static final String PROVIDER_URL = "t3://localhost:7001";
+    private static final String DEFAULT_PROVIDER_URL = "t3://127.0.0.1:7003,127.0.0.1:7004";
+    private static final String DEFAULT_USERNAME = "weblogic";
+    private static final String DEFAULT_PASSWORD = "weblogic123";
     
     /**
      * JNDI lookup patterns for WebLogic:
@@ -109,12 +111,18 @@ public class AccountManagerClient {
      */
     private Context getInitialContext() throws NamingException {
         Hashtable<String, String> env = new Hashtable<>();
+        String providerUrl = System.getProperty("wls.providerUrl", DEFAULT_PROVIDER_URL);
+        String username = System.getProperty("wls.username", DEFAULT_USERNAME);
+        String password = System.getProperty("wls.password", DEFAULT_PASSWORD);
+
         env.put(Context.INITIAL_CONTEXT_FACTORY, WEBLOGIC_JNDI_FACTORY);
-        env.put(Context.PROVIDER_URL, PROVIDER_URL);
+        env.put(Context.PROVIDER_URL, providerUrl);
         
         // Add credentials - required for WebLogic security
-        env.put(Context.SECURITY_PRINCIPAL, "weblogic");
-        env.put(Context.SECURITY_CREDENTIALS, "weblogic123");
+        env.put(Context.SECURITY_PRINCIPAL, username);
+        env.put(Context.SECURITY_CREDENTIALS, password);
+
+        System.out.println("Using provider URL(s): " + providerUrl);
         
         return new InitialContext(env);
     }
