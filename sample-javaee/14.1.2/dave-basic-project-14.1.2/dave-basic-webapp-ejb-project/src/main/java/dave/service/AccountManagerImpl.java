@@ -4,6 +4,8 @@
  */
 package dave.service;
 
+import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.ejb.Remote;
 import javax.ejb.Local;
@@ -27,20 +29,37 @@ import dave.entity.Account;
 @DataSourceDefinition(name = "java:module/env/mavenArchetypeDataSource", className = "org.apache.derby.jdbc.ClientXADataSource", portNumber = 1527, serverName = "localhost", databaseName = "examples", user = "examples", password = "examples", properties={"create=true", "weblogic.TestTableName=SQL SELECT 1 FROM SYS.SYSTABLES"})
 public class AccountManagerImpl implements AccountManager, AccountManagerRemote {
 
+  private static final Logger LOGGER = Logger.getLogger(AccountManagerImpl.class.getName());
+
   @PersistenceContext
   private EntityManager em;
   
   public void depositOnAccount(String name, float amount) {
+    String serverName = System.getProperty("weblogic.Name", "unknown-server");
+    LOGGER.info("[" + serverName + "] depositOnAccount called for account='" + name + "', amount=" + amount);
+
     Account account = em.find(Account.class, name);
     if (account == null) {
       account = new Account();
       account.setName(name);
+      LOGGER.info("[" + serverName + "] Creating new account record for '" + name + "'");
     }
+
     account.setAmount(account.getAmount() + amount);
     em.persist(account);
+    LOGGER.info("[" + serverName + "] Account '" + name + "' balance updated to " + account.getAmount());
   }
   
   public Account findAccount(String name) {
-    return em.find(Account.class, name);
+    String serverName = System.getProperty("weblogic.Name", "unknown-server");
+    LOGGER.info("[" + serverName + "] findAccount called for account='" + name + "'");
+
+    Account account = em.find(Account.class, name);
+    if (account == null) {
+      LOGGER.info("[" + serverName + "] Account not found for '" + name + "'");
+    } else {
+      LOGGER.info("[" + serverName + "] Account found for '" + name + "' with balance=" + account.getAmount());
+    }
+    return account;
   }
 }
