@@ -60,3 +60,7 @@ local.properties
 .project
 /build/
 target
+
+# VS Code
+.vscode/
+.vscode-test/
