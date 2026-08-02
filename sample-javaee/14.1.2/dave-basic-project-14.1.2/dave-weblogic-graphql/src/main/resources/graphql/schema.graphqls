@@ -1,0 +1,15 @@
+type Query {
+    "Find a single account by name"
+    account(name: String!): Account
+
+    "List all accounts"
+    accounts: [Account]
+}
+
+type Account {
+    "Unique account name (primary key)"
+    name: String
+
+    "Current balance"
+    amount: Float
+}

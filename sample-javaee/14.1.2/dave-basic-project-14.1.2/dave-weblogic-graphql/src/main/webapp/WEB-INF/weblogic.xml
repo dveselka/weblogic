@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-web-app xmlns="http://xmlns.oracle.com/weblogic/weblogic-web-app"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://xmlns.oracle.com/weblogic/weblogic-web-app
+                  http://xmlns.oracle.com/weblogic/weblogic-web-app/1.9/weblogic-web-app.xsd">
+
+  <container-descriptor>
+    <!-- Prefer the bundled graphql-java, ANTLR, and Jackson over WebLogic's versions -->
+    <prefer-application-packages>
+      <package-name>graphql.*</package-name>
+      <package-name>org.antlr.*</package-name>
+      <package-name>com.fasterxml.jackson.*</package-name>
+      <package-name>org.reactivestreams.*</package-name>
+    </prefer-application-packages>
+    <prefer-application-resources>
+      <resource-name>META-INF/services/graphql.*</resource-name>
+    </prefer-application-resources>
+  </container-descriptor>
+
+</weblogic-web-app>
